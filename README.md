@@ -63,7 +63,6 @@ The tutorial covers:
 4. **Foundation Stereo Inference** - Compute disparity map
 5. **Depth Conversion** - Convert disparity to metric depth
 6. **3D Visualization** - Interactive point cloud with Rerun
-7. **Summary** - Performance metrics and next steps
 
 ## Configuration
 
