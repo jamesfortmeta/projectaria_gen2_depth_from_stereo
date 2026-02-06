@@ -68,16 +68,24 @@ Add this cell:
 
 **In Colab:**
 1. Error auto-downloads to your Downloads folder as `colab_error.txt`
-2. Nothing else to do in Colab
+2. Nothing else needed in Colab (keep it open for retry later)
 
-**Locally (with me):**
-1. You say: **"read colab error"**
-2. I run: `./read_colab_error.sh`
-3. I analyze the error and fix the code
-4. I commit & push the fix
+**Locally (one-time copy):**
+```bash
+cp ~/Downloads/colab_error.txt ~/Documents/Projects/2026_Feb5/projectaria_gen2_depth_from_stereo/
+```
 
-**Back in Colab:**
-Add and run this cell:
+**Then tell me:**
+```
+read colab error
+```
+
+**I will:**
+1. Read the error automatically
+2. Analyze and fix the code
+3. Commit & push the fix
+
+**Back in Colab (after I've pushed the fix):**
 ```python
 !git pull origin main
 !python run_colab.py  # Retry

@@ -55,20 +55,38 @@ SYSTEM INFO:
     print(f"📁 Error saved to: {error_file}")
     print("!"*70)
 
-    # Auto-download if in Colab
+    # Try to push error to GitHub so Claude can fetch it
     try:
-        from google.colab import files
+        import subprocess
+
+        # Configure git (in case not set)
+        subprocess.run(['git', 'config', 'user.email', 'colab@example.com'],
+                      capture_output=True, check=False)
+        subprocess.run(['git', 'config', 'user.name', 'Colab Runner'],
+                      capture_output=True, check=False)
+
+        # Commit and push error
+        subprocess.run(['git', 'add', error_file], capture_output=True, check=True)
+        subprocess.run(['git', 'commit', '-m', f'Colab error: {step}'],
+                      capture_output=True, check=True)
+        subprocess.run(['git', 'push', 'origin', 'main'],
+                      capture_output=True, check=True)
+
+        print("\n✅ Error pushed to GitHub!")
+        print("📋 Tell Claude: 'read colab error' (Claude will git pull)")
+
+    except Exception as git_err:
+        # Git push failed (expected - no auth), fall back to download
         print("\n⬇️  DOWNLOADING ERROR LOG...")
-        files.download(error_file)
-        print("✅ Downloaded! Check your Downloads folder.")
-        print("\n📋 NEXT STEPS:")
-        print("   1. Find 'colab_error.txt' in your Downloads")
-        print("   2. Tell Claude: 'read colab error'")
-        print("   3. I'll analyze and fix the issue")
-    except ImportError:
-        # Not in Colab
-        print(f"\n📋 Error saved to: {error_file}")
-        print("Copy this file to share with Claude")
+        try:
+            from google.colab import files
+            files.download(error_file)
+            print("✅ Downloaded to your computer!")
+            print("\n📋 NEXT STEPS:")
+            print("   1. Run this in terminal: cp ~/Downloads/colab_error.txt ~/Documents/Projects/2026_Feb5/projectaria_gen2_depth_from_stereo/")
+            print("   2. Tell Claude: 'read colab error'")
+        except ImportError:
+            print(f"\n📋 Error saved to: {error_file}")
 
     return error_file
 
