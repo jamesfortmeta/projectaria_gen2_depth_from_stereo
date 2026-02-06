@@ -1,0 +1,31 @@
+# Model weights (too large for Git - transfer separately)
+*.pth
+*.onnx
+*.plan
+*.pt
+
+# VRS data files (transfer separately)
+*.vrs
+
+# Dataset folder (transfer separately)
+dataset/
+vrs_sample_data/
+
+# CDN download URLs (contains temporary links)
+*_download_urls.json
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+
+# Output directories
+test_outputs/
+outputs/
+
+# Compressed data
+*.csv.gz
